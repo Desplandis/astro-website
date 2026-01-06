@@ -1,0 +1,41 @@
+---
+interface Props {
+  href?: string;
+  class?: string;
+}
+
+const { href, class: className } = Astro.props;
+const Element = href ? 'a' : 'div';
+---
+
+<Element href={href} class:list={['card', className, { clickable: !!href }]}>
+  <slot />
+</Element>
+
+<style>
+  .card {
+    background-color: var(--color-bg-primary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    transition: all var(--transition-base);
+  }
+
+  .card.clickable {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .card.clickable:hover {
+    border-color: var(--color-accent-primary);
+    box-shadow: var(--shadow-md);
+    text-decoration: none;
+  }
+
+  .card.clickable:focus-visible {
+    outline: 2px solid var(--color-accent-primary);
+    outline-offset: 2px;
+  }
+</style>
+

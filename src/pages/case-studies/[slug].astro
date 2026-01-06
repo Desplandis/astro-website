@@ -1,0 +1,102 @@
+---
+import { getCollection } from 'astro:content';
+import PageLayout from '@layouts/PageLayout.astro';
+
+export async function getStaticPaths() {
+  const caseStudies = await getCollection('case-studies');
+  return caseStudies.map((study) => ({
+    params: { slug: study.slug },
+    props: { study },
+  }));
+}
+
+const { study } = Astro.props;
+const { Content } = await study.render();
+---
+
+<PageLayout title={study.data.organization} description={study.data.useCase}>
+  <article class="case-study">
+    <div class="container">
+      <header class="study-header">
+        <h1>{study.data.title}</h1>
+        <div class="study-meta">
+          <span class="industry">{study.data.industry}</span>
+          {
+            study.data.website && (
+              <a
+                href={study.data.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="website-link"
+              >
+                Visit Website →
+              </a>
+            )
+          }
+        </div>
+        <p class="use-case">{study.data.useCase}</p>
+      </header>
+
+      <div class="study-content">
+        <Content />
+      </div>
+    </div>
+  </article>
+</PageLayout>
+
+<style>
+  .case-study {
+    padding: var(--space-8) 0;
+  }
+
+  .study-header {
+    max-width: 720px;
+    margin-bottom: var(--space-8);
+  }
+
+  .study-header h1 {
+    margin-bottom: var(--space-3);
+  }
+
+  .study-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+  }
+
+  .industry {
+    padding: var(--space-2) var(--space-3);
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    text-transform: capitalize;
+  }
+
+  .website-link {
+    font-size: var(--text-sm);
+    color: var(--color-accent-primary);
+  }
+
+  .use-case {
+    font-size: var(--text-xl);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  .study-content {
+    max-width: 720px;
+  }
+
+  .study-content :global(h2) {
+    margin-top: var(--space-7);
+    margin-bottom: var(--space-4);
+  }
+
+  .study-content :global(h3) {
+    margin-top: var(--space-5);
+    margin-bottom: var(--space-3);
+  }
+</style>
+

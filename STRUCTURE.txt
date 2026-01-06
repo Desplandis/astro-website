@@ -1,0 +1,222 @@
+iTowns Website - Complete Directory Structure
+===============================================
+
+itowns-website/
+│
+├── .cursor/
+│   └── rules/
+│       └── project/
+│           └── RULES.md                    (existing)
+│
+├── docs/
+│   ├── product-definition.md               (existing)
+│   ├── repository-structure.md             (existing)
+│   └── stack-decision.md                   (existing)
+│
+├── public/
+│   ├── favicon.svg                         ✅ NEW
+│   ├── manifest.json                       ✅ NEW
+│   └── robots.txt                          ✅ NEW
+│
+├── src/
+│   │
+│   ├── assets/                             📁 (create as needed for images, etc.)
+│   │
+│   ├── components/
+│   │   ├── layout/
+│   │   │   ├── Footer.astro                ✅ NEW
+│   │   │   └── Header.astro                ✅ NEW
+│   │   │
+│   │   ├── sections/                       📁 (for future hero, CTA components)
+│   │   │
+│   │   └── ui/
+│   │       ├── Button.astro                ✅ NEW
+│   │       └── Card.astro                  ✅ NEW
+│   │
+│   ├── content/
+│   │   ├── blog/
+│   │   │   └── 2026-01-welcome.md          ✅ NEW
+│   │   │
+│   │   ├── case-studies/
+│   │   │   └── example-organization.md     ✅ NEW
+│   │   │
+│   │   ├── governance/
+│   │   │   └── decision-process.md         ✅ NEW
+│   │   │
+│   │   └── config.ts                       ✅ NEW (Zod schemas)
+│   │
+│   ├── layouts/
+│   │   ├── BaseLayout.astro                ✅ NEW
+│   │   ├── BlogLayout.astro                ✅ NEW
+│   │   └── PageLayout.astro                ✅ NEW
+│   │
+│   ├── pages/
+│   │   ├── blog/
+│   │   │   ├── [slug].astro                ✅ NEW
+│   │   │   └── index.astro                 ✅ NEW
+│   │   │
+│   │   ├── case-studies/
+│   │   │   ├── [slug].astro                ✅ NEW
+│   │   │   └── index.astro                 ✅ NEW
+│   │   │
+│   │   ├── docs/
+│   │   │   └── index.astro                 ✅ NEW
+│   │   │
+│   │   ├── 404.astro                       ✅ NEW
+│   │   ├── community.astro                 ✅ NEW
+│   │   ├── governance.astro                ✅ NEW
+│   │   └── index.astro                     ✅ NEW (homepage)
+│   │
+│   ├── styles/
+│   │   ├── global.css                      ✅ NEW
+│   │   └── variables.css                   ✅ NEW
+│   │
+│   ├── utils/
+│   │   ├── content.ts                      ✅ NEW
+│   │   └── dates.ts                        ✅ NEW
+│   │
+│   └── env.d.ts                            ✅ NEW
+│
+├── .cursorignore                           ✅ NEW
+├── .editorconfig                           ✅ NEW
+├── .eslintrc.json                          ✅ NEW
+├── .gitignore                              ✅ NEW
+├── .prettierrc                             ✅ NEW
+├── astro.config.mjs                        ✅ NEW
+├── package.json                            ✅ NEW
+├── README.md                               (existing, updated)
+├── SETUP.md                                ✅ NEW
+├── STRUCTURE.txt                           ✅ NEW (this file)
+└── tsconfig.json                           ✅ NEW
+
+
+ROUTING MAP
+===========
+
+Static Routes:
+  /                        → src/pages/index.astro
+  /blog                    → src/pages/blog/index.astro
+  /case-studies            → src/pages/case-studies/index.astro
+  /governance              → src/pages/governance.astro
+  /docs                    → src/pages/docs/index.astro
+  /community               → src/pages/community.astro
+  /404                     → src/pages/404.astro
+
+Dynamic Routes:
+  /blog/*                  → src/pages/blog/[slug].astro
+  /case-studies/*          → src/pages/case-studies/[slug].astro
+
+
+CONTENT COLLECTIONS
+===================
+
+1. blog (src/content/blog/)
+   - Schema: title, summary, publishDate, updatedDate, audience, tags, draft, author
+   - Sample: 2026-01-welcome.md
+
+2. case-studies (src/content/case-studies/)
+   - Schema: title, organization, industry, useCase, outcome, publishDate, featured, logo, website
+   - Sample: example-organization.md
+
+3. governance (src/content/governance/)
+   - Schema: title, summary, category, lastUpdated, order
+   - Sample: decision-process.md
+
+
+KEY FEATURES
+============
+
+✅ Astro 4.x with MDX support
+✅ TypeScript with path aliases (@components, @layouts, @utils, @styles, @assets)
+✅ Content Collections with Zod validation
+✅ Scoped CSS (no CSS frameworks)
+✅ Responsive design (mobile-first)
+✅ Accessibility features (ARIA, focus states, semantic HTML)
+✅ Dark mode support (CSS variables)
+✅ SEO-ready (meta tags, Open Graph, Twitter cards)
+✅ Static output (zero JavaScript by default)
+✅ Dual-audience design (developers + decision-makers)
+
+
+COMMANDS
+========
+
+npm install          - Install dependencies
+npm run dev          - Start dev server (http://localhost:4321)
+npm run build        - Build for production
+npm run preview      - Preview production build
+npm run astro check  - Type-check TypeScript and content
+npm run format       - Format code with Prettier
+npm run lint         - Lint code with ESLint
+
+
+FILES CREATED: 35
+=================
+
+Configuration (11):
+  - package.json
+  - astro.config.mjs
+  - tsconfig.json
+  - .prettierrc
+  - .eslintrc.json
+  - .gitignore
+  - .cursorignore
+  - .editorconfig
+  - SETUP.md
+  - STRUCTURE.txt
+  - src/env.d.ts
+
+Public Assets (3):
+  - public/favicon.svg
+  - public/robots.txt
+  - public/manifest.json
+
+Layouts (3):
+  - src/layouts/BaseLayout.astro
+  - src/layouts/PageLayout.astro
+  - src/layouts/BlogLayout.astro
+
+Components (4):
+  - src/components/layout/Header.astro
+  - src/components/layout/Footer.astro
+  - src/components/ui/Button.astro
+  - src/components/ui/Card.astro
+
+Pages (9):
+  - src/pages/index.astro
+  - src/pages/blog/index.astro
+  - src/pages/blog/[slug].astro
+  - src/pages/case-studies/index.astro
+  - src/pages/case-studies/[slug].astro
+  - src/pages/governance.astro
+  - src/pages/docs/index.astro
+  - src/pages/community.astro
+  - src/pages/404.astro
+
+Content (4):
+  - src/content/config.ts
+  - src/content/blog/2026-01-welcome.md
+  - src/content/case-studies/example-organization.md
+  - src/content/governance/decision-process.md
+
+Styles (2):
+  - src/styles/global.css
+  - src/styles/variables.css
+
+Utils (2):
+  - src/utils/dates.ts
+  - src/utils/content.ts
+
+
+STATUS: ✅ COMPLETE
+===================
+
+The Astro project structure is fully configured and ready for:
+  1. npm install
+  2. npm run dev
+  3. Development and content creation
+
+All Astro conventions followed.
+All project requirements met.
+All TODO items completed.
+
