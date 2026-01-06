@@ -1,16 +1,31 @@
 ---
 import { getCollection } from 'astro:content';
 import BlogLayout from '@layouts/BlogLayout.astro';
+import { sortByDateDesc, filterDrafts } from '@utils/dates';
 
 export async function getStaticPaths() {
-  const blogPosts = await getCollection('blog');
-  return blogPosts.map((post) => ({
-    params: { slug: post.slug },
-    props: { post },
-  }));
+  const allPosts = await getCollection('blog');
+  const publishedPosts = sortByDateDesc(filterDrafts(allPosts));
+
+  return publishedPosts.map((post, index) => {
+    // Get previous and next posts for navigation
+    const prevPost =
+      index > 0
+        ? { slug: publishedPosts[index - 1].slug, title: publishedPosts[index - 1].data.title }
+        : null;
+    const nextPost =
+      index < publishedPosts.length - 1
+        ? { slug: publishedPosts[index + 1].slug, title: publishedPosts[index + 1].data.title }
+        : null;
+
+    return {
+      params: { slug: post.slug },
+      props: { post, prevPost, nextPost },
+    };
+  });
 }
 
-const { post } = Astro.props;
+const { post, prevPost, nextPost } = Astro.props;
 const { Content } = await post.render();
 ---
 
@@ -22,7 +37,10 @@ const { Content } = await post.render();
   audience={post.data.audience}
   tags={post.data.tags}
   author={post.data.author}
+  featured={post.data.featured}
+  rawContent={post.body}
+  prevPost={prevPost}
+  nextPost={nextPost}
 >
   <Content />
 </BlogLayout>
-
