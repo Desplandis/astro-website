@@ -1,0 +1,459 @@
+---
+import PageLayout from '@layouts/PageLayout.astro';
+import Container from '@components/ui/Container.astro';
+import Section from '@components/ui/Section.astro';
+import Button from '@components/ui/Button.astro';
+import Card from '@components/ui/Card.astro';
+import Tag from '@components/ui/Tag.astro';
+import Badge from '@components/ui/Badge.astro';
+import Hero from '@components/sections/Hero.astro';
+import FeatureGrid from '@components/sections/FeatureGrid.astro';
+import CallToAction from '@components/sections/CallToAction.astro';
+---
+
+<PageLayout
+  title="Style Guide"
+  description="Visual reference for all UI components and design patterns"
+>
+  <Container size="narrow">
+    <div class="style-guide">
+      <header class="guide-header">
+        <h1>Style Guide</h1>
+        <p class="lead">
+          Visual reference for the iTowns website design system. This page
+          demonstrates all components, typography, colors, and patterns.
+        </p>
+        <p class="note">
+          <strong>Note:</strong> This page is for development reference only.
+        </p>
+      </header>
+
+      <!-- Typography -->
+      <section class="guide-section">
+        <h2>Typography</h2>
+
+        <div class="example-block">
+          <h1>Heading 1 (48px)</h1>
+          <h2>Heading 2 (36px)</h2>
+          <h3>Heading 3 (30px)</h3>
+          <h4>Heading 4 (24px)</h4>
+          <h5>Heading 5 (20px)</h5>
+          <h6>Heading 6 (18px)</h6>
+
+          <p>
+            Body text (16px) with a <a href="#">link example</a> and
+            <strong>bold text</strong> and <em>italic text</em>. This
+            demonstrates the default paragraph styling with comfortable line
+            height (1.5) and proper spacing.
+          </p>
+
+          <p class="small-text">
+            Small text (14px) for captions and metadata.
+          </p>
+
+          <code>inline code example</code>
+
+          <pre><code>// Block code example
+function hello() {
+  return "world";
+}</code></pre>
+
+          <blockquote>
+            This is a blockquote. Used for callouts and quotations with a left
+            border and indentation.
+          </blockquote>
+        </div>
+      </section>
+
+      <!-- Colors -->
+      <section class="guide-section">
+        <h2>Color Palette</h2>
+
+        <div class="color-grid">
+          <div class="color-swatch">
+            <div class="swatch" style="background-color: #1a1a1a;"></div>
+            <p><strong>Text Primary</strong><br />#1a1a1a</p>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch" style="background-color: #4a4a4a;"></div>
+            <p><strong>Text Secondary</strong><br />#4a4a4a</p>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch" style="background-color: #737373;"></div>
+            <p><strong>Text Tertiary</strong><br />#737373</p>
+          </div>
+          <div class="color-swatch">
+            <div
+              class="swatch"
+              style="background-color: #ffffff; border: 1px solid #e5e5e5;"
+            >
+            </div>
+            <p><strong>BG Primary</strong><br />#ffffff</p>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch" style="background-color: #f5f5f5;"></div>
+            <p><strong>BG Secondary</strong><br />#f5f5f5</p>
+          </div>
+          <div class="color-swatch">
+            <div class="swatch" style="background-color: #2563eb;"></div>
+            <p><strong>Accent Primary</strong><br />#2563eb</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Spacing -->
+      <section class="guide-section">
+        <h2>Spacing Scale</h2>
+        <p>8px base unit (0.5rem)</p>
+
+        <div class="spacing-demo">
+          <div class="space-item" style="width: 4px;">
+            <span>1 (4px)</span>
+          </div>
+          <div class="space-item" style="width: 8px;">
+            <span>2 (8px)</span>
+          </div>
+          <div class="space-item" style="width: 12px;">
+            <span>3 (12px)</span>
+          </div>
+          <div class="space-item" style="width: 16px;">
+            <span>4 (16px)</span>
+          </div>
+          <div class="space-item" style="width: 24px;">
+            <span>5 (24px)</span>
+          </div>
+          <div class="space-item" style="width: 32px;">
+            <span>6 (32px)</span>
+          </div>
+          <div class="space-item" style="width: 48px;">
+            <span>7 (48px)</span>
+          </div>
+          <div class="space-item" style="width: 64px;">
+            <span>8 (64px)</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Buttons -->
+      <section class="guide-section">
+        <h2>Buttons</h2>
+
+        <div class="example-block">
+          <h3>Variants</h3>
+          <div class="button-row">
+            <Button variant="primary">Primary</Button>
+            <Button variant="secondary">Secondary</Button>
+            <Button variant="outline">Outline</Button>
+          </div>
+
+          <h3>Sizes</h3>
+          <div class="button-row">
+            <Button size="sm">Small</Button>
+            <Button size="md">Medium (Default)</Button>
+            <Button size="lg">Large</Button>
+          </div>
+
+          <h3>As Links</h3>
+          <div class="button-row">
+            <Button href="/docs" variant="primary">Get Started →</Button>
+            <Button href="/about" variant="outline">Learn More</Button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Cards -->
+      <section class="guide-section">
+        <h2>Cards</h2>
+
+        <div class="card-demo">
+          <Card>
+            <h3>Static Card</h3>
+            <p>This card is not clickable. Used for content display only.</p>
+          </Card>
+
+          <Card href="#">
+            <h3>Interactive Card</h3>
+            <p>
+              This card is clickable (has href). Hover to see the interaction.
+            </p>
+          </Card>
+        </div>
+      </section>
+
+      <!-- Tags -->
+      <section class="guide-section">
+        <h2>Tags</h2>
+
+        <div class="example-block">
+          <h3>Variants</h3>
+          <div class="tag-row">
+            <Tag>Default</Tag>
+            <Tag variant="primary">Primary</Tag>
+            <Tag variant="success">Success</Tag>
+            <Tag variant="warning">Warning</Tag>
+          </div>
+
+          <h3>Sizes</h3>
+          <div class="tag-row">
+            <Tag size="sm">Small</Tag>
+            <Tag size="md">Medium (Default)</Tag>
+          </div>
+        </div>
+      </section>
+
+      <!-- Badges -->
+      <section class="guide-section">
+        <h2>Badges (Audience Indicators)</h2>
+
+        <div class="example-block">
+          <div class="badge-row">
+            <Badge audience="developers" />
+            <Badge audience="executives" />
+            <Badge audience="both" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Container -->
+      <section class="guide-section">
+        <h2>Containers</h2>
+        <p>
+          Containers constrain content width and provide consistent padding.
+        </p>
+
+        <div class="example-block">
+          <div style="background: #f5f5f5; padding: 1rem; margin-bottom: 1rem;">
+            <Container>
+              <div
+                style="background: white; padding: 1rem; border: 1px solid #e5e5e5;"
+              >
+                Default Container (max-width: 1280px)
+              </div>
+            </Container>
+          </div>
+
+          <div style="background: #f5f5f5; padding: 1rem; margin-bottom: 1rem;">
+            <Container size="narrow">
+              <div
+                style="background: white; padding: 1rem; border: 1px solid #e5e5e5;"
+              >
+                Narrow Container (max-width: 720px)
+              </div>
+            </Container>
+          </div>
+
+          <div style="background: #f5f5f5; padding: 1rem;">
+            <Container size="wide">
+              <div
+                style="background: white; padding: 1rem; border: 1px solid #e5e5e5;"
+              >
+                Wide Container (max-width: 1440px)
+              </div>
+            </Container>
+          </div>
+        </div>
+      </section>
+    </div>
+  </Container>
+
+  <!-- Section Components (Full Width) -->
+  <div class="full-width-demos">
+    <h2 style="text-align: center; margin: 4rem 0 2rem;">
+      Section Components
+    </h2>
+
+    <!-- Hero -->
+    <Hero
+      title="Hero Component Example"
+      subtitle="Large title with optional subtitle and up to 2 CTAs."
+      primaryCTA={{ href: '#', label: 'Primary Action' }}
+      secondaryCTA={{ href: '#', label: 'Secondary Action' }}
+    >
+      <p style="margin-top: 2rem; color: var(--color-text-tertiary);">
+        Optional slot content can go here (e.g., quick facts, badges).
+      </p>
+    </Hero>
+
+    <!-- Feature Grid -->
+    <FeatureGrid
+      columns={3}
+      heading="Feature Grid Component"
+      description="Responsive grid for features or content cards. Adjusts columns based on viewport."
+    >
+      <Card>
+        <h3>Feature 1</h3>
+        <p>Description of the first feature with supporting details.</p>
+      </Card>
+      <Card>
+        <h3>Feature 2</h3>
+        <p>Description of the second feature with supporting details.</p>
+      </Card>
+      <Card>
+        <h3>Feature 3</h3>
+        <p>Description of the third feature with supporting details.</p>
+      </Card>
+    </FeatureGrid>
+
+    <!-- Call to Action -->
+    <CallToAction
+      heading="Call to Action Component"
+      description="Centered CTA section with optional description and up to 2 action buttons."
+      primaryCTA={{ href: '#', label: 'Primary Action' }}
+      secondaryCTA={{ href: '#', label: 'Secondary Action' }}
+      background="secondary"
+    />
+  </div>
+</PageLayout>
+
+<style>
+  .style-guide {
+    padding: var(--space-8) 0;
+  }
+
+  .guide-header {
+    text-align: center;
+    margin-bottom: var(--space-9);
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .lead {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    margin: 0 auto var(--space-4);
+  }
+
+  .note {
+    font-size: var(--text-sm);
+    color: var(--color-text-tertiary);
+    padding: var(--space-3) var(--space-4);
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    display: inline-block;
+  }
+
+  .guide-section {
+    margin-bottom: var(--space-9);
+  }
+
+  .guide-section h2 {
+    margin-bottom: var(--space-5);
+    padding-bottom: var(--space-3);
+    border-bottom: 2px solid var(--color-border);
+  }
+
+  .guide-section h3 {
+    margin-top: var(--space-6);
+    margin-bottom: var(--space-3);
+    font-size: var(--text-lg);
+  }
+
+  .example-block {
+    background-color: var(--color-bg-secondary);
+    padding: var(--space-5);
+    border-radius: var(--radius-lg);
+    margin-top: var(--space-4);
+  }
+
+  .small-text {
+    font-size: var(--text-sm);
+    color: var(--color-text-tertiary);
+  }
+
+  /* Color Grid */
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+  }
+
+  .color-swatch {
+    text-align: center;
+  }
+
+  .swatch {
+    width: 100%;
+    height: 100px;
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-2);
+  }
+
+  .color-swatch p {
+    font-size: var(--text-sm);
+    margin: 0;
+  }
+
+  /* Spacing Demo */
+  .spacing-demo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+  }
+
+  .space-item {
+    height: 40px;
+    background-color: var(--color-accent-primary);
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+
+  .space-item span {
+    position: absolute;
+    left: 100%;
+    margin-left: var(--space-3);
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+  }
+
+  /* Button Row */
+  .button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+
+  /* Card Demo */
+  .card-demo {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+  }
+
+  /* Tag Row */
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  /* Badge Row */
+  .badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  /* Full Width Demos */
+  .full-width-demos {
+    margin-top: var(--space-9);
+  }
+
+  @media (max-width: 768px) {
+    .spacing-demo {
+      font-size: var(--text-xs);
+    }
+
+    .color-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
+

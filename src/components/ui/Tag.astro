@@ -1,0 +1,56 @@
+---
+interface Props {
+  variant?: 'default' | 'primary' | 'success' | 'warning';
+  size?: 'sm' | 'md';
+  class?: string;
+}
+
+const { variant = 'default', size = 'md', class: className } = Astro.props;
+---
+
+<span class:list={['tag', `variant-${variant}`, `size-${size}`, className]}>
+  <slot />
+</span>
+
+<style>
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    border-radius: var(--radius-sm);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  /* Sizes */
+  .size-sm {
+    padding: var(--space-1) var(--space-2);
+    font-size: var(--text-xs);
+  }
+
+  .size-md {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-sm);
+  }
+
+  /* Variants */
+  .variant-default {
+    background-color: var(--color-bg-secondary);
+    color: var(--color-text-secondary);
+  }
+
+  .variant-primary {
+    background-color: var(--color-accent-light);
+    color: var(--color-accent-primary);
+  }
+
+  .variant-success {
+    background-color: rgba(22, 163, 74, 0.1);
+    color: var(--color-success);
+  }
+
+  .variant-warning {
+    background-color: rgba(234, 88, 12, 0.1);
+    color: var(--color-warning);
+  }
+</style>
+

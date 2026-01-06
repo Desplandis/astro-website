@@ -1,0 +1,102 @@
+---
+import Container from '@components/ui/Container.astro';
+import Button from '@components/ui/Button.astro';
+
+interface Props {
+  heading: string;
+  description?: string;
+  primaryCTA?: { href: string; label: string };
+  secondaryCTA?: { href: string; label: string };
+  background?: 'primary' | 'secondary';
+  class?: string;
+}
+
+const {
+  heading,
+  description,
+  primaryCTA,
+  secondaryCTA,
+  background = 'secondary',
+  class: className,
+} = Astro.props;
+---
+
+<section class:list={['cta-section', `bg-${background}`, className]}>
+  <Container>
+    <div class="cta-content">
+      <h2 class="cta-heading">{heading}</h2>
+      {description && <p class="cta-description">{description}</p>}
+
+      {
+        (primaryCTA || secondaryCTA) && (
+          <div class="cta-actions">
+            {primaryCTA && (
+              <Button href={primaryCTA.href} variant="primary" size="lg">
+                {primaryCTA.label}
+              </Button>
+            )}
+            {secondaryCTA && (
+              <Button href={secondaryCTA.href} variant="outline" size="lg">
+                {secondaryCTA.label}
+              </Button>
+            )}
+          </div>
+        )
+      }
+    </div>
+  </Container>
+</section>
+
+<style>
+  .cta-section {
+    padding: var(--space-9) 0;
+  }
+
+  .bg-primary {
+    background-color: var(--color-bg-primary);
+  }
+
+  .bg-secondary {
+    background-color: var(--color-bg-secondary);
+  }
+
+  .cta-content {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .cta-heading {
+    font-size: var(--text-4xl);
+    margin-bottom: var(--space-4);
+  }
+
+  .cta-description {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-6);
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: center;
+  }
+
+  @media (max-width: 768px) {
+    .cta-section {
+      padding: var(--space-7) 0;
+    }
+
+    .cta-heading {
+      font-size: var(--text-3xl);
+    }
+
+    .cta-actions {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+</style>
+

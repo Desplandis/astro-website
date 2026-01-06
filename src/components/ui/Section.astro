@@ -1,0 +1,56 @@
+---
+interface Props {
+  background?: 'primary' | 'secondary';
+  spacing?: 'default' | 'large' | 'small';
+  class?: string;
+}
+
+const {
+  background = 'primary',
+  spacing = 'default',
+  class: className,
+} = Astro.props;
+---
+
+<section class:list={['section', `bg-${background}`, `spacing-${spacing}`, className]}>
+  <slot />
+</section>
+
+<style>
+  .section {
+    width: 100%;
+  }
+
+  /* Backgrounds */
+  .bg-primary {
+    background-color: var(--color-bg-primary);
+  }
+
+  .bg-secondary {
+    background-color: var(--color-bg-secondary);
+  }
+
+  /* Spacing */
+  .spacing-small {
+    padding: var(--space-6) 0;
+  }
+
+  .spacing-default {
+    padding: var(--space-8) 0;
+  }
+
+  .spacing-large {
+    padding: var(--space-9) 0;
+  }
+
+  @media (max-width: 768px) {
+    .spacing-default {
+      padding: var(--space-6) 0;
+    }
+
+    .spacing-large {
+      padding: var(--space-7) 0;
+    }
+  }
+</style>
+

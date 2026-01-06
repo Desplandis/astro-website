@@ -1,0 +1,90 @@
+---
+import Container from '@components/ui/Container.astro';
+
+interface Props {
+  columns?: 2 | 3 | 4;
+  heading?: string;
+  description?: string;
+  class?: string;
+}
+
+const { columns = 3, heading, description, class: className } = Astro.props;
+---
+
+<section class:list={['feature-grid-section', className]}>
+  <Container>
+    {
+      (heading || description) && (
+        <header class="section-header">
+          {heading && <h2 class="section-heading">{heading}</h2>}
+          {description && <p class="section-description">{description}</p>}
+        </header>
+      )
+    }
+
+    <div class:list={['feature-grid', `columns-${columns}`]}>
+      <slot />
+    </div>
+  </Container>
+</section>
+
+<style>
+  .feature-grid-section {
+    padding: var(--space-8) 0;
+  }
+
+  .section-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto var(--space-8);
+  }
+
+  .section-heading {
+    margin-bottom: var(--space-4);
+  }
+
+  .section-description {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  .feature-grid {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .columns-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .columns-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .columns-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (max-width: 1024px) {
+    .columns-3,
+    .columns-4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .feature-grid-section {
+      padding: var(--space-6) 0;
+    }
+
+    .section-header {
+      margin-bottom: var(--space-6);
+    }
+
+    .feature-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
