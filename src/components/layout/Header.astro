@@ -1,0 +1,142 @@
+---
+const currentPath = Astro.url.pathname;
+
+const navItems = [
+  { href: '/docs', label: 'Documentation' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/case-studies', label: 'Case Studies' },
+  { href: '/governance', label: 'Governance' },
+  { href: '/community', label: 'Community' },
+];
+---
+
+<header class="site-header">
+  <div class="container">
+    <nav class="nav" aria-label="Main navigation">
+      <a href="/" class="logo">
+        <span class="logo-text">iTowns</span>
+      </a>
+
+      <ul class="nav-list">
+        {
+          navItems.map(({ href, label }) => (
+            <li>
+              <a
+                href={href}
+                class:list={['nav-link', { active: currentPath.startsWith(href) }]}
+                aria-current={currentPath.startsWith(href) ? 'page' : undefined}
+              >
+                {label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="nav-actions">
+        <a
+          href="https://github.com/iTowns/itowns"
+          class="github-link"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="View iTowns on GitHub"
+        >
+          GitHub
+        </a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-bg-primary);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-4) 0;
+    gap: var(--space-6);
+  }
+
+  .logo {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    text-decoration: none;
+  }
+
+  .logo:hover {
+    text-decoration: none;
+    color: var(--color-accent-primary);
+  }
+
+  .nav-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: var(--space-5);
+    flex: 1;
+    justify-content: center;
+  }
+
+  .nav-link {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+    font-weight: 500;
+  }
+
+  .nav-link:hover {
+    color: var(--color-accent-primary);
+    text-decoration: none;
+  }
+
+  .nav-link.active {
+    color: var(--color-text-primary);
+  }
+
+  .nav-actions {
+    display: flex;
+    gap: var(--space-3);
+  }
+
+  .github-link {
+    padding: var(--space-2) var(--space-4);
+    background-color: var(--color-text-primary);
+    color: var(--color-bg-primary);
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    font-size: var(--text-sm);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+
+  .github-link:hover {
+    background-color: var(--color-accent-primary);
+    text-decoration: none;
+  }
+
+  @media (max-width: 768px) {
+    .nav {
+      flex-wrap: wrap;
+    }
+
+    .nav-list {
+      order: 3;
+      width: 100%;
+      flex-direction: column;
+      gap: var(--space-3);
+      padding-top: var(--space-4);
+    }
+  }
+</style>
+

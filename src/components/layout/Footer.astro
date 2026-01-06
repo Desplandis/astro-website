@@ -1,0 +1,137 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-section">
+        <h3 class="footer-heading">iTowns</h3>
+        <p class="footer-description">
+          A commons-oriented framework for building 3D geospatial web
+          applications. Built on open standards, governed by its users.
+        </p>
+      </div>
+
+      <div class="footer-section">
+        <h4 class="footer-heading">For Developers</h4>
+        <ul class="footer-links">
+          <li><a href="/docs">Documentation</a></li>
+          <li><a href="/docs/getting-started">Getting Started</a></li>
+          <li><a href="https://github.com/iTowns/itowns" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="/docs/contributing">Contributing</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h4 class="footer-heading">For Decision-Makers</h4>
+        <ul class="footer-links">
+          <li><a href="/governance">Governance</a></li>
+          <li><a href="/case-studies">Case Studies</a></li>
+          <li><a href="/community">Community</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h4 class="footer-heading">Connect</h4>
+        <ul class="footer-links">
+          <li><a href="/blog">Blog</a></li>
+          <li><a href="https://github.com/iTowns/itowns/discussions" target="_blank" rel="noopener">Discussions</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="copyright">
+        © {currentYear} iTowns Contributors. Licensed under <a
+          href="https://www.apache.org/licenses/LICENSE-2.0"
+          target="_blank"
+          rel="noopener">Apache 2.0</a
+        >.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: var(--color-bg-secondary);
+    border-top: 1px solid var(--color-border);
+    padding: var(--space-8) 0 var(--space-6);
+    margin-top: var(--space-9);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: var(--space-7);
+    margin-bottom: var(--space-7);
+  }
+
+  .footer-section h3,
+  .footer-section h4 {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--space-3);
+    color: var(--color-text-primary);
+  }
+
+  .footer-description {
+    font-size: var(--text-sm);
+    color: var(--color-text-tertiary);
+    line-height: var(--leading-relaxed);
+  }
+
+  .footer-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .footer-links a {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+  }
+
+  .footer-links a:hover {
+    color: var(--color-accent-primary);
+  }
+
+  .footer-bottom {
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .copyright {
+    font-size: var(--text-sm);
+    color: var(--color-text-tertiary);
+    text-align: center;
+    margin: 0;
+  }
+
+  .copyright a {
+    color: var(--color-text-secondary);
+  }
+
+  @media (max-width: 1024px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+  }
+</style>
+
