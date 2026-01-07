@@ -3,7 +3,7 @@ import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://astro-website.desplandis.github.io',
+  site: 'https://desplandis.github.io/astro-website/',
   output: 'static',
   integrations: [mdx()],
   markdown: {
