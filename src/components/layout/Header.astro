@@ -27,7 +27,7 @@ const navItems = [
           navItems.map(({ href, label }) => (
             <li>
               <a
-                href={new URL(href, Astro.site ?? '/')}
+                href={href}
                 class:list={['nav-link', { active: isActive(href) }]}
                 aria-current={isActive(href) ? 'page' : undefined}
               >
