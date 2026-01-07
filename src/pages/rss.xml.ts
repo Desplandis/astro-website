@@ -3,6 +3,8 @@ import { getCollection } from 'astro:content';
 import { sortByDateDesc, filterDrafts } from '@utils/dates';
 import type { APIContext } from 'astro';
 
+const contact = 'community@itowns.org';
+
 export async function GET(context: APIContext) {
   const allPosts = await getCollection('blog');
   const publishedPosts = sortByDateDesc(filterDrafts(allPosts));
@@ -24,8 +26,8 @@ export async function GET(context: APIContext) {
     customData: `
       <language>en-us</language>
       <copyright>© ${new Date().getFullYear()} iTowns Contributors. Apache 2.0 License.</copyright>
-      <managingEditor>community@itowns.org (iTowns Community)</managingEditor>
-      <webMaster>community@itowns.org (iTowns Community)</webMaster>
+      <managingEditor>${contact} (iTowns Community)</managingEditor>
+      <webMaster>${contact} (iTowns Community)</webMaster>
       <ttl>60</ttl>
     `,
   });

@@ -3,12 +3,12 @@ import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://itowns.org',
+  site: 'https://astro-website.desplandis.github.io',
   output: 'static',
   integrations: [mdx()],
   markdown: {
     shikiConfig: {
-      theme: 'github-dark',
+      theme: 'dracula',
       wrap: true,
     },
   },

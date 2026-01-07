@@ -6,6 +6,10 @@ import { getCollection } from 'astro:content';
 import { formatDate, sortByDateDesc, filterDrafts } from '@utils/dates';
 import { calculateReadingTime } from '@utils/content';
 
+interface Props {
+  audience: 'developers' | 'executives' | 'both';
+}
+
 export async function getStaticPaths() {
   return [
     { params: { audience: 'developers' } },

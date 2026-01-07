@@ -1,21 +1,26 @@
 ---
-const currentPath = Astro.url.pathname;
+const isActive = (href: string) =>
+  Astro.url.pathname === href ||
+  Astro.url.pathname.startsWith(`${href}/`);
 
 const navItems = [
-  { href: '/docs', label: 'Documentation' },
+  { href: '/features', label: 'Features' },
+  { href: '/docs', label: 'Docs' },
   { href: '/blog', label: 'Blog' },
-  { href: '/case-studies', label: 'Case Studies' },
+  { href: '/case-studies', label: 'Showcases' },
   { href: '/governance', label: 'Governance' },
   { href: '/community', label: 'Community' },
 ];
 ---
 
-<header class="site-header">
+<header>
   <div class="container">
     <nav class="nav" aria-label="Main navigation">
       <a href="/" class="logo">
         <span class="logo-text">iTowns</span>
       </a>
+
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true" />
 
       <ul class="nav-list">
         {
@@ -23,8 +28,8 @@ const navItems = [
             <li>
               <a
                 href={href}
-                class:list={['nav-link', { active: currentPath.startsWith(href) }]}
-                aria-current={currentPath.startsWith(href) ? 'page' : undefined}
+                class:list={['nav-link', { active: isActive(href) }]}
+                aria-current={isActive(href) ? 'page' : undefined}
               >
                 {label}
               </a>
@@ -39,22 +44,29 @@ const navItems = [
           class="github-link"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="View iTowns on GitHub"
+          aria-label="View Project on GitHub (opens in a new tab)"
         >
           GitHub
         </a>
+
+        <!-- Hamburger menu button (label for checkbox) -->
+        <label for="nav-toggle" class="hamburger" aria-label="Toggle navigation menu">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </label>
       </div>
     </nav>
   </div>
 </header>
 
 <style>
-  .site-header {
+  header {
+    position: sticky;
+
     border-bottom: 1px solid var(--color-border);
     background-color: var(--color-bg-primary);
-    position: sticky;
     top: 0;
-    z-index: 100;
   }
 
   .nav {
@@ -73,8 +85,15 @@ const navItems = [
   }
 
   .logo:hover {
-    text-decoration: none;
     color: var(--color-accent-primary);
+  }
+
+  .nav-toggle {
+    display: none;
+  }
+
+  .hamburger {
+    display: none;
   }
 
   .nav-list {
@@ -83,7 +102,6 @@ const navItems = [
     margin: 0;
     padding: 0;
     gap: var(--space-5);
-    flex: 1;
     justify-content: center;
   }
 
@@ -92,20 +110,20 @@ const navItems = [
     color: var(--color-text-secondary);
     text-decoration: none;
     transition: color var(--transition-fast);
-    font-weight: 500;
   }
 
   .nav-link:hover {
     color: var(--color-accent-primary);
-    text-decoration: none;
   }
 
   .nav-link.active {
     color: var(--color-text-primary);
+    font-weight: 600;
   }
 
   .nav-actions {
     display: flex;
+    align-items: center;
     gap: var(--space-3);
   }
 
@@ -114,28 +132,77 @@ const navItems = [
     background-color: var(--color-text-primary);
     color: var(--color-bg-primary);
     border-radius: var(--radius-md);
-    font-weight: 500;
     font-size: var(--text-sm);
     text-decoration: none;
-    transition: all var(--transition-fast);
+    transition: background-color var(--transition-fast);
   }
 
   .github-link:hover {
     background-color: var(--color-accent-primary);
-    text-decoration: none;
   }
 
   @media (max-width: 768px) {
     .nav {
       flex-wrap: wrap;
+      justify-content: space-between;
     }
 
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 2.75rem;
+      height: 2.75rem;
+      cursor: pointer;
+      gap: 5px;
+    }
+
+    .hamburger-line {
+      display: block;
+      width: 1.5rem;
+      height: 2px;
+      background-color: var(--color-text-primary);
+      border-radius: 2px;
+      transition: all var(--transition-fast);
+      transform-origin: center;
+    }
+
+    /* Hamburger to X animation when checked */
+    .nav-toggle:checked ~ .nav-actions .hamburger .hamburger-line:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .nav-toggle:checked ~ .nav-actions .hamburger .hamburger-line:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    .nav-toggle:checked ~ .nav-actions .hamburger .hamburger-line:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* Hide nav-list by default on mobile - positioned absolutely */
     .nav-list {
-      order: 3;
-      width: 100%;
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
       flex-direction: column;
       gap: var(--space-3);
-      padding-top: var(--space-4);
+      padding: var(--space-4);
+      background-color: var(--color-bg-primary);
+      border-bottom: 1px solid var(--color-border);
+      box-shadow: var(--shadow-md);
+    }
+
+    .nav-list li {
+      text-align: center;
+    }
+
+    .nav-toggle:checked ~ .nav-list {
+      display: flex;
     }
   }
 </style>

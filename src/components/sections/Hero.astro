@@ -10,8 +10,14 @@ interface Props {
   class?: string;
 }
 
-const { title, subtitle, primaryCTA, secondaryCTA, class: className } =
-  Astro.props;
+const {
+  title,
+  subtitle,
+  primaryCTA,
+  secondaryCTA,
+  class: className
+} = Astro.props;
+
 ---
 
 <section class:list={['hero', className]}>
@@ -49,7 +55,6 @@ const { title, subtitle, primaryCTA, secondaryCTA, class: className } =
   }
 
   .hero-content {
-    max-width: 900px;
     margin: 0 auto;
   }
 
