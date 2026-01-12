@@ -1,6 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
-import BlogLayout from '@layouts/BlogLayout.astro';
+import ArticleLayout from '@layouts/ArticleLayout.astro';
 import { sortByDateDesc, filterDrafts } from '@utils/dates';
 
 export async function getStaticPaths() {
@@ -29,7 +29,7 @@ const { post, prevPost, nextPost } = Astro.props;
 const { Content } = await post.render();
 ---
 
-<BlogLayout
+<ArticleLayout
   title={post.data.title}
   summary={post.data.summary}
   publishDate={post.data.publishDate}
@@ -37,10 +37,14 @@ const { Content } = await post.render();
   audience={post.data.audience}
   tags={post.data.tags}
   author={post.data.author}
+  authorImage={post.data.authorImage}
   featured={post.data.featured}
+  image={post.data.image}
+  imageCaptionTitle={post.data.imageCaptionTitle}
+  imageCaptionDescription={post.data.imageCaptionDescription}
   rawContent={post.body}
   prevPost={prevPost}
   nextPost={nextPost}
 >
   <Content />
-</BlogLayout>
+</ArticleLayout>

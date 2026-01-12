@@ -75,7 +75,7 @@ iTowns Website UI System Architecture
         │               │ (Labels)   (Audience)                 │
         │               │                                       │
         ▼               ▼                                       │
-   BlogLayout     (Used in pages)                              │
+   ArticleLayout     (Used in pages)                              │
    (Post template)                                             │
                                                                 │
                                                                 │
@@ -162,7 +162,7 @@ BaseLayout (foundation)
       └─ Footer
           └─ Uses: CSS variables, semantic HTML
 
-BlogLayout (extends BaseLayout)
+ArticleLayout (extends BaseLayout)
   ├─ Header
   ├─ Article (slot)
   │   ├─ Post metadata (date, audience, tags)
@@ -301,7 +301,7 @@ Total Components: 15
 Layouts:          3
 ├─ BaseLayout
 ├─ PageLayout
-└─ BlogLayout
+└─ ArticleLayout
 
 UI Components:    7
 ├─ Button

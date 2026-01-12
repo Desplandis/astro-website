@@ -93,7 +93,7 @@ src/
 ├── layouts/
 │   ├── BaseLayout       # HTML foundation + SEO
 │   ├── PageLayout       # Standard page wrapper
-│   └── BlogLayout       # Blog post template
+│   └── ArticleLayout       # Blog post template
 └── styles/
     ├── variables.css    # Design tokens (CSS custom properties)
     └── global.css       # Reset, base typography, utilities
@@ -133,7 +133,7 @@ src/
 
 **BaseLayout** - HTML foundation with SEO meta tags  
 **PageLayout** - Standard page with header/footer  
-**BlogLayout** - Blog post with metadata display
+**ArticleLayout** - Blog post with metadata display
 
 ### UI Components (7)
 

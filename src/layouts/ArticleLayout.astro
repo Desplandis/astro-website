@@ -1,0 +1,701 @@
+---
+import DefaultLayout from './DefaultLayout.astro';
+import Header from '@components/layout/Header.astro';
+import Footer from '@components/layout/Footer.astro';
+import Tag from '@components/ui/Tag.astro';
+import { formatDate } from '@utils/dates';
+import { calculateReadingTime } from '@utils/content';
+
+interface Props {
+  title: string;
+  summary: string;
+  publishDate: Date;
+  updatedDate?: Date;
+  audience: 'developers' | 'executives' | 'both';
+  tags: string[];
+  author?: string;
+  authorImage?: string;
+  featured?: boolean;
+  rawContent?: string;
+  // Cover image
+  image?: string;
+  imageCaptionTitle?: string;
+  imageCaptionDescription?: string;
+  // Navigation
+  prevPost?: { slug: string; title: string } | null;
+  nextPost?: { slug: string; title: string } | null;
+}
+
+const {
+  title,
+  summary,
+  publishDate,
+  updatedDate,
+  audience,
+  tags,
+  author,
+  authorImage,
+  featured,
+  rawContent = '',
+  image,
+  imageCaptionTitle,
+  imageCaptionDescription,
+  prevPost,
+  nextPost,
+} = Astro.props;
+
+const readingTime = calculateReadingTime(rawContent);
+const publishDateISO = publishDate.toISOString();
+const updatedDateISO = updatedDate?.toISOString();
+
+// Check if post is recent (within 14 days)
+const isRecent = (Date.now() - publishDate.getTime()) < 14 * 24 * 60 * 60 * 1000;
+
+// Default author avatar
+const defaultAvatar = '/images/authors/default-avatar.svg';
+const avatarSrc = authorImage || defaultAvatar;
+
+// Structured data for SEO (JSON-LD)
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description: summary,
+  image: image,
+  datePublished: publishDateISO,
+  dateModified: updatedDateISO || publishDateISO,
+  author: author
+    ? { '@type': 'Person', name: author }
+    : { '@type': 'Organization', name: 'iTowns Contributors' },
+  publisher: {
+    '@type': 'Organization',
+    name: 'iTowns',
+    url: 'https://itowns.org',
+  },
+};
+---
+
+<DefaultLayout title={title} description={summary} image={image}>
+  <Header />
+
+  <main id="main-content">
+    <div class="container">
+      <article class="article padded" itemscope itemtype="https://schema.org/BlogPosting">
+        <div class="content article-container">
+          <!-- Cover Image -->
+          {image && (
+            <figure class="article-cover">
+              {(imageCaptionTitle || imageCaptionDescription) && (
+                <figcaption>
+                  {imageCaptionTitle && <strong>{imageCaptionTitle}</strong>}
+                  {imageCaptionDescription && (
+                    <span class="caption-description">{imageCaptionDescription}</span>
+                  )}
+                </figcaption>
+              )}
+              <img
+                src={image}
+                title={imageCaptionTitle}
+                alt={`${imageCaptionTitle || title} ${imageCaptionDescription || ''}`}
+                class="cover-image"
+                loading="eager"
+              />
+            </figure>
+          )}
+
+          <!-- Article Info -->
+          <div class="article-info">
+            <h1 itemprop="headline">{title}</h1>
+
+            <div class="article-metadata">
+              <div class="article-author">
+                <span>By:</span>
+                <img
+                  class="avatar"
+                  width="25"
+                  height="25"
+                  src={avatarSrc}
+                  alt={author || 'Author'}
+                  loading="lazy"
+                />
+                <span class="by" itemprop="author">{author || 'iTowns Contributors'}</span>
+              </div>
+
+              <span class:list={['date', { 'post-recent-highlight': isRecent }]} data-post-date={publishDateISO}>
+                <time datetime={publishDateISO} itemprop="datePublished">
+                  {formatDate(publishDate)}
+                </time>
+              </span>
+
+              {readingTime > 0 && (
+                <span class="reading-time">{readingTime} min read</span>
+              )}
+            </div>
+
+            <!-- Tags -->
+            {tags && tags.length > 0 && (
+              <nav class="tags" aria-label="Post tags">
+                {tags.map((tag) => (
+                  <a href={`/blog/tag/${tag}`} class="tag-link">
+                    <Tag size="sm">{tag}</Tag>
+                  </a>
+                ))}
+              </nav>
+            )}
+
+            {updatedDate && (
+              <div class="updated-notice">
+                <span class="sr-only">Updated:</span>
+                <time datetime={updatedDateISO} itemprop="dateModified">
+                  Updated {formatDate(updatedDate, 'short')}
+                </time>
+              </div>
+            )}
+          </div>
+
+          <!-- Article Body -->
+          <div class="article-body" itemprop="articleBody">
+            <slot />
+          </div>
+
+          <!-- Blog Navigation -->
+          {(prevPost || nextPost) && (
+            <nav class="post-navigation" aria-label="Blog navigation">
+              <div class="nav-links">
+                {prevPost ? (
+                  <a href={`/blog/${prevPost.slug}`} class="nav-link prev" rel="prev">
+                    <span class="nav-label">← Previous</span>
+                    <span class="nav-title">{prevPost.title}</span>
+                  </a>
+                ) : <span />}
+
+                {nextPost && (
+                  <a href={`/blog/${nextPost.slug}`} class="nav-link next" rel="next">
+                    <span class="nav-label">Next →</span>
+                    <span class="nav-title">{nextPost.title}</span>
+                  </a>
+                )}
+              </div>
+            </nav>
+          )}
+
+          <div class="back-to-blog">
+            <a href="/blog">← Back to all posts</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <Footer />
+
+  <!-- Structured Data -->
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(structuredData)}
+  />
+</DefaultLayout>
+
+<style>
+  /* Base layout */
+  main {
+    background-color: var(--color-bg-secondary);
+  }
+
+  .container {
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+    padding: var(--space-6) var(--container-padding);
+  }
+
+  /* Article card */
+  .article {
+    background-color: var(--color-bg-primary);
+    box-shadow: 0px 3px 2px 0px rgba(0, 0, 0, 0.15);
+    border-radius: var(--radius-lg);
+  }
+
+  .padded {
+    padding: var(--space-6);
+  }
+
+  .article-container {
+    max-width: 100%;
+  }
+
+  @media screen and (min-width: 900px) {
+    .article .content {
+      width: 70%;
+      margin: auto;
+    }
+  }
+
+  /* Cover image */
+  .article-cover {
+    margin: 0 0 var(--space-6) 0;
+  }
+
+  .article-cover figcaption {
+    margin-bottom: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+  }
+
+  .article-cover figcaption .caption-description {
+    margin-left: 0.75rem;
+    font-size: 90%;
+  }
+
+  .cover-image {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    background-color: transparent;
+  }
+
+  /* Article info */
+  .article-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-bottom: var(--space-6);
+  }
+
+  .article-info h1 {
+    margin-bottom: var(--space-2);
+    margin-top: var(--space-6);
+    font-size: var(--text-4xl);
+    line-height: var(--leading-tight);
+  }
+
+  /* Article metadata */
+  .article-metadata {
+    display: flex;
+    gap: var(--space-5);
+    align-items: center;
+    font-family: var(--font-sans);
+    margin-bottom: var(--space-3);
+  }
+
+  @media (max-width: 900px) {
+    .article-metadata {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-4);
+    }
+  }
+
+  /* Author */
+  .article-author {
+    color: var(--color-text-tertiary);
+    font-weight: 700;
+    font-size: var(--text-lg);
+    flex-grow: 1;
+    display: flex;
+    gap: var(--space-3);
+    align-items: center;
+  }
+
+  .article-author .avatar {
+    border-radius: 100%;
+    margin: 0;
+    background: transparent;
+  }
+
+  .article-author .by {
+    color: var(--color-text-secondary);
+  }
+
+  /* Date */
+  .article-metadata .date {
+    color: var(--color-text-tertiary);
+  }
+
+  .article-metadata .date.post-recent-highlight {
+    color: var(--color-warning);
+    opacity: 0.8;
+  }
+
+  .article-metadata .date.post-recent-highlight::after {
+    font-size: 80%;
+    content: "NEW";
+    border: 2px solid var(--color-warning);
+    padding: 2px 3px;
+    margin-left: var(--space-2);
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+  }
+
+  .reading-time {
+    color: var(--color-text-tertiary);
+    font-size: var(--text-sm);
+  }
+
+  /* Tags */
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .tag-link {
+    text-decoration: none;
+  }
+
+  .tag-link:hover {
+    text-decoration: none;
+  }
+
+  /* Updated notice */
+  .updated-notice {
+    font-size: var(--text-sm);
+    font-style: italic;
+    color: var(--color-text-tertiary);
+  }
+
+  /* Article body content styles */
+  .article-body {
+    margin-top: var(--space-6);
+  }
+
+  .article-body :global(h1) {
+    margin-top: var(--space-9);
+    font-size: var(--text-3xl);
+  }
+
+  .article-body :global(h2),
+  .article-body :global(h3),
+  .article-body :global(h4) {
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-4);
+  }
+
+  .article-body :global(h2) {
+    font-size: var(--text-2xl);
+  }
+
+  .article-body :global(h3) {
+    font-size: var(--text-xl);
+  }
+
+  .article-body :global(h4) {
+    font-size: var(--text-lg);
+  }
+
+  .article-body :global(p) {
+    margin-bottom: var(--space-4);
+    line-height: var(--leading-relaxed);
+  }
+
+  .article-body :global(ul),
+  .article-body :global(ol) {
+    margin-bottom: var(--space-4);
+    padding-left: var(--space-5);
+  }
+
+  .article-body :global(li) {
+    margin-bottom: var(--space-2);
+    line-height: var(--leading-relaxed);
+  }
+
+  .article-body :global(blockquote) {
+    margin: var(--space-6) 0;
+    padding: var(--space-4) var(--space-5);
+    border-left: 4px solid var(--color-accent-primary);
+    background-color: var(--color-bg-secondary);
+    font-style: italic;
+  }
+
+  .article-body :global(blockquote p:last-child) {
+    margin-bottom: 0;
+  }
+
+  /* Inline code */
+  .article-body :global(:not(pre) > code) {
+    background: var(--color-bg-tertiary);
+    padding: 1px 4px;
+    font-size: 0.95em;
+    border-radius: 3px;
+    font-family: var(--font-mono);
+  }
+
+  /* Code blocks */
+  .article-body :global(pre) {
+    background: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+    margin: var(--space-5) 0;
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+  }
+
+  .article-body :global(pre code) {
+    display: block;
+    overflow-x: auto;
+    padding: var(--space-4);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+  }
+
+  /* Images and videos */
+  .article-body :global(img),
+  .article-body :global(video) {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: var(--space-4) auto;
+    border-radius: var(--radius-md);
+  }
+
+  .article-body :global(figure) {
+    margin: 0;
+  }
+
+  .article-body :global(figure img) {
+    margin: 0;
+  }
+
+  .article-body :global(hr) {
+    margin: var(--space-8) 0;
+    border: none;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .article-body :global(table) {
+    width: 100%;
+    margin: var(--space-5) 0;
+    border-collapse: collapse;
+  }
+
+  .article-body :global(th),
+  .article-body :global(td) {
+    padding: var(--space-3);
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .article-body :global(th) {
+    font-weight: 600;
+    background-color: var(--color-bg-secondary);
+  }
+
+  .article-body :global(a) {
+    color: var(--color-accent-primary);
+    text-decoration: underline;
+  }
+
+  .article-body :global(a:hover) {
+    color: var(--color-accent-hover);
+  }
+
+  /* Blog navigation */
+  .post-navigation {
+    margin-top: var(--space-6);
+    margin-bottom: var(--space-6);
+    padding: var(--space-5) 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .nav-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+  }
+
+  .nav-link {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding: var(--space-3);
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: background-color var(--transition-fast);
+  }
+
+  .nav-link:hover {
+    background-color: var(--color-bg-tertiary);
+    text-decoration: none;
+  }
+
+  .nav-link.next {
+    text-align: right;
+  }
+
+  .nav-label {
+    font-size: var(--text-xs);
+    color: var(--color-text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .nav-title {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-text-primary);
+    line-height: var(--leading-tight);
+  }
+
+  @media (max-width: 768px) {
+    .nav-links {
+      grid-template-columns: 1fr;
+    }
+
+    .nav-link.next {
+      text-align: left;
+    }
+  }
+
+  /* Back to blog */
+  .back-to-blog {
+    text-align: center;
+    padding-bottom: var(--space-6);
+  }
+
+  .back-to-blog a {
+    font-size: var(--text-sm);
+    color: var(--color-accent-primary);
+    text-decoration: none;
+  }
+
+  .back-to-blog a:hover {
+    text-decoration: underline;
+  }
+
+  /* Accessibility */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  /* Responsive - Mobile styles */
+  @media (max-width: 900px) {
+    main {
+      background-color: var(--color-bg-primary);
+    }
+
+    .article {
+      background-color: transparent;
+      box-shadow: none;
+    }
+
+    .padded {
+      padding: var(--space-4);
+    }
+
+    .article-info h1 {
+      font-size: var(--text-3xl);
+    }
+
+    .cover-image {
+      max-width: 100%;
+      border-radius: 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .article-info h1 {
+      font-size: var(--text-2xl);
+    }
+  }
+</style>
+
+<script>
+  // Add lightbox functionality for images
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.article-cover img, .article-body img').forEach((img) => {
+      if (img.classList.contains('lightbox-ignore')) {
+        return;
+      }
+
+      const imgElement = img as HTMLImageElement;
+      imgElement.style.cursor = 'zoom-in';
+
+      imgElement.addEventListener('click', () => {
+        // Create lightbox overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'lightbox-overlay';
+        overlay.style.cssText = `
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.9);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 9999;
+          cursor: zoom-out;
+        `;
+
+        const lightboxImg = document.createElement('img');
+        lightboxImg.src = imgElement.src;
+        lightboxImg.alt = imgElement.alt;
+        lightboxImg.style.cssText = `
+          max-width: 90%;
+          max-height: 90%;
+          object-fit: contain;
+        `;
+
+        overlay.appendChild(lightboxImg);
+        document.body.appendChild(overlay);
+
+        // Close on click
+        overlay.addEventListener('click', () => {
+          overlay.remove();
+        });
+
+        // Close on escape
+        const handleEscape = (e: KeyboardEvent) => {
+          if (e.key === 'Escape') {
+            overlay.remove();
+            document.removeEventListener('keydown', handleEscape);
+          }
+        };
+        document.addEventListener('keydown', handleEscape);
+      });
+    });
+
+    // Add anchor links to headings
+    document.querySelectorAll('.article-body h1, .article-body h2, .article-body h3, .article-body h4').forEach((heading) => {
+      const headingElement = heading as HTMLElement;
+      if (!headingElement.id) {
+        headingElement.id = headingElement.textContent?.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '') || '';
+      }
+
+      if (headingElement.id) {
+        const anchor = document.createElement('a');
+        anchor.href = `#${headingElement.id}`;
+        anchor.className = 'anchor-link';
+        anchor.setAttribute('aria-hidden', 'true');
+        anchor.innerHTML = '#';
+        anchor.style.cssText = `
+          margin-left: 0.5rem;
+          opacity: 0;
+          text-decoration: none;
+          color: var(--color-text-tertiary);
+          transition: opacity 0.2s;
+        `;
+
+        headingElement.appendChild(anchor);
+
+        headingElement.addEventListener('mouseenter', () => {
+          anchor.style.opacity = '1';
+        });
+
+        headingElement.addEventListener('mouseleave', () => {
+          anchor.style.opacity = '0';
+        });
+      }
+    });
+  });
+</script>

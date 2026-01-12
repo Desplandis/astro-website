@@ -51,7 +51,7 @@ A complete, production-ready UI system for the iTowns framework website, designe
 #### Layout Components (3)
 ✅ **BaseLayout.astro** - HTML foundation with SEO meta tags  
 ✅ **PageLayout.astro** - Standard page wrapper with header/footer  
-✅ **BlogLayout.astro** - Blog post template with metadata  
+✅ **ArticleLayout.astro** - Blog post template with metadata  
 
 #### UI Components (7)
 ✅ **Button.astro** - 3 variants (primary, secondary, outline), 3 sizes  
@@ -202,7 +202,7 @@ iTowns Website (Enhanced)
 │   ├── layouts/
 │   │   ├── BaseLayout.astro     (existing)
 │   │   ├── PageLayout.astro     (existing)
-│   │   └── BlogLayout.astro     (existing)
+│   │   └── ArticleLayout.astro     (existing)
 │   │
 │   ├── pages/
 │   │   ├── style-guide.astro    ✅ NEW (Visual reference)
@@ -439,7 +439,7 @@ Per component:
 ## 🎯 Success Criteria Met
 
 ✅ **Design principles defined** (5 core principles documented)  
-✅ **Base layout with slots** (BaseLayout, PageLayout, BlogLayout)  
+✅ **Base layout with slots** (BaseLayout, PageLayout, ArticleLayout)  
 ✅ **Reusable components scaffolded** (15 components created)  
 ✅ **Scoped CSS approach** (Astro automatic scoping + CSS variables)  
 ✅ **Accessibility-first** (WCAG 2.1 AA, semantic HTML, keyboard nav)  

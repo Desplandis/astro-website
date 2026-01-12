@@ -66,7 +66,7 @@ itowns-website/
 │   ├── layouts/               # Page layouts
 │   │   ├── BaseLayout.astro   # Base HTML structure
 │   │   ├── PageLayout.astro   # Standard page wrapper
-│   │   ├── BlogLayout.astro   # Blog post layout
+│   │   ├── ArticleLayout.astro   # Blog post layout
 │   │   └── DocsLayout.astro   # Documentation layout
 │   │
 │   ├── pages/                 # File-based routing
@@ -203,7 +203,7 @@ export const collections = { blog };
 **Hierarchy:**
 - `BaseLayout.astro` - Base HTML structure (head, body, meta tags)
 - `PageLayout.astro` - Standard page (extends BaseLayout, adds header/footer)
-- `BlogLayout.astro` - Blog post (extends PageLayout, adds metadata, date)
+- `ArticleLayout.astro` - Blog post (extends PageLayout, adds metadata, date)
 - `DocsLayout.astro` - Documentation (extends PageLayout, adds sidebar)
 
 ---

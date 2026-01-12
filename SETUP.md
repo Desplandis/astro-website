@@ -46,7 +46,7 @@ itowns-website/
 │   ├── layouts/                    ✅ Created
 │   │   ├── BaseLayout.astro
 │   │   ├── PageLayout.astro
-│   │   └── BlogLayout.astro
+│   │   └── ArticleLayout.astro
 │   ├── pages/                      ✅ Created
 │   │   ├── index.astro
 │   │   ├── blog/

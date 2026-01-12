@@ -228,7 +228,7 @@ Set `draft: false` and commit the file.
 ### Location
 
 ```
-src/layouts/BlogLayout.astro
+src/layouts/ArticleLayout.astro
 ```
 
 ### Props
@@ -533,7 +533,7 @@ src/
 │       └── 2026-01-api-v5-migration.md
 │
 ├── layouts/
-│   └── BlogLayout.astro       # Blog post template
+│   └── ArticleLayout.astro       # Blog post template
 │
 ├── pages/
 │   └── blog/
@@ -556,7 +556,7 @@ src/
 ### Adding New Frontmatter Fields
 
 1. Update schema in `src/content/config.ts`
-2. Update `BlogLayout.astro` to use new field
+2. Update `ArticleLayout.astro` to use new field
 3. Update blog pages if needed
 4. Document in this file
 

@@ -56,7 +56,12 @@ const blog = defineCollection({
       .min(1, 'At least one tag required')
       .max(5, 'Maximum 5 tags'),
     author: z.string().optional(),
+    authorImage: z.string().optional(), // Path to author avatar
     featured: z.boolean().default(false),
+    // Cover image fields
+    image: z.string().optional(), // Cover image URL
+    imageCaptionTitle: z.string().optional(), // Caption title
+    imageCaptionDescription: z.string().optional(), // Caption description
     ...seoFields,
   }),
 });

@@ -79,11 +79,11 @@ import PageLayout from '@layouts/PageLayout.astro';
 
 ---
 
-### BlogLayout
+### ArticleLayout
 
 **Purpose:** Blog post template with metadata display.
 
-**Location:** `src/layouts/BlogLayout.astro`
+**Location:** `src/layouts/ArticleLayout.astro`
 
 **Props:**
 ```typescript
@@ -101,10 +101,10 @@ import PageLayout from '@layouts/PageLayout.astro';
 **Usage:**
 ```astro
 ---
-import BlogLayout from '@layouts/BlogLayout.astro';
+import ArticleLayout from '@layouts/ArticleLayout.astro';
 ---
 
-<BlogLayout
+<ArticleLayout
   title="Post Title"
   summary="Post summary"
   publishDate={new Date('2026-01-06')}
@@ -112,7 +112,7 @@ import BlogLayout from '@layouts/BlogLayout.astro';
   tags={['governance', 'technical']}
 >
   <!-- Blog post content (markdown) -->
-</BlogLayout>
+</ArticleLayout>
 ```
 
 **Features:**

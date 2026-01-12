@@ -47,7 +47,7 @@ itowns-website/
 │   │
 │   ├── layouts/
 │   │   ├── BaseLayout.astro                ✅ NEW
-│   │   ├── BlogLayout.astro                ✅ NEW
+│   │   ├── ArticleLayout.astro                ✅ NEW
 │   │   └── PageLayout.astro                ✅ NEW
 │   │
 │   ├── pages/
@@ -174,7 +174,7 @@ Public Assets (3):
 Layouts (3):
   - src/layouts/BaseLayout.astro
   - src/layouts/PageLayout.astro
-  - src/layouts/BlogLayout.astro
+  - src/layouts/ArticleLayout.astro
 
 Components (4):
   - src/components/layout/Header.astro
